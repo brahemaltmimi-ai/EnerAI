@@ -57,11 +57,9 @@ EnerAI/
      ```bash
      python -m http.server 5500
      ```
-## 🎬 Demo Video
+## Demo Video
 
-<a href="https://github.com/brahemaltmimi-ai/EnerAI/EnerAI.mp4">
-  <img src="https://img.shields.io/badge/▶ Watch Demo-EnerAI-blue?style=for-the-badge" />
-</a>
+https://raw.githubusercontent.com/brahemaltmimi-ai/EnerAI/main/EnerAI.mp4
 
 ## Notes
 
