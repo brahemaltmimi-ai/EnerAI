@@ -59,7 +59,7 @@ EnerAI/
      ```
 ## Demo Video
 
-[![Demo Video](https://raw.githubusercontent.com/brahemaltmimi-ai/EnerAI/main/EnerAI.mp4)
+[Demo Video](https://raw.githubusercontent.com/brahemaltmimi-ai/EnerAI/main/EnerAI.mp4)
 
 ## Notes
 
