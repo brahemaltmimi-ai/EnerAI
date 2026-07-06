@@ -57,10 +57,6 @@ EnerAI/
      ```bash
      python -m http.server 5500
      ```
-## Demo Video
-
-[Demo Video](https://raw.githubusercontent.com/brahemaltmimi-ai/EnerAI/main/EnerAI.mp4)
-
 ## Notes
 
 - The API base URL used by the frontend is set in `js/config.js` (`API_BASE`).
