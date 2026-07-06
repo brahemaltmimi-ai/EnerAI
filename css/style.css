@@ -1,0 +1,165 @@
+.chart-container {
+    position: relative;
+    height: 350px;
+    width: 100%;
+    background: linear-gradient(135deg, rgba(96, 165, 250, 0.05) 0%, rgba(147, 197, 253, 0.05) 100%);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1);
+}
+
+/* تحسينات الرسوم البيانية */
+.chart-bar {
+    background: linear-gradient(180deg, #93C5FD 0%, #60A5FA 100%);
+    border-radius: 8px 8px 0 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 -2px 10px rgba(96, 165, 250, 0.3);
+}
+
+.chart-bar:hover {
+    background: linear-gradient(180deg, #BFDBFE 0%, #93C5FD 100%);
+    transform: scaleY(1.05);
+    box-shadow: 0 -4px 15px rgba(96, 165, 250, 0.5);
+}
+
+.chart-line {
+    stroke: #60A5FA;
+    stroke-width: 3;
+    fill: none;
+    filter: drop-shadow(0 2px 4px rgba(96, 165, 250, 0.4));
+    animation: drawLine 1.5s ease-in-out;
+}
+
+@keyframes drawLine {
+    from { stroke-dashoffset: 1000; }
+    to { stroke-dashoffset: 0; }
+}
+
+.chart-point {
+    fill: #BFDBFE;
+    stroke: #3B82F6;
+    stroke-width: 3;
+    r: 6;
+    transition: all 0.2s ease;
+}
+
+.chart-point:hover {
+    r: 9;
+    fill: #93C5FD;
+    filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.8));
+}
+
+.chart-grid {
+    stroke: rgba(96, 165, 250, 0.15);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+}
+
+.chart-label {
+    fill: #64748B;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.chart-tooltip {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 2px solid #93C5FD;
+    border-radius: 12px;
+    padding: 12px 16px;
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.25);
+    color: #1E40AF;
+    font-weight: 600;
+    animation: tooltipPop 0.2s ease;
+}
+
+@keyframes tooltipPop {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.chart-area {
+    fill: url(#areaGradient);
+    opacity: 0.6;
+}
+
+.area-gradient-start {
+    stop-color: #93C5FD;
+    stop-opacity: 0.8;
+}
+
+.area-gradient-end {
+    stop-color: #DBEAFE;
+    stop-opacity: 0.1;
+}
+
+.org-tree-container {
+            font-size: 13px;
+        }
+        
+        .org-item {
+            padding: 10px 14px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 3px 0;
+            border: 1px solid transparent;
+        }
+        
+        .org-item:hover {
+            background-color: #f3f4f6;
+            border-color: #e5e7eb;
+            transform: translateX(2px);
+        }
+        
+        .org-item.selected {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            color: #1e40af;
+            font-weight: 600;
+            border-color: #93c5fd;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+        }
+        
+        .org-item .icon {
+            width: 20px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 13px;
+        }
+        
+        .org-item.selected .icon {
+            color: #1e40af;
+        }
+        
+        .org-children {
+            margin-left: 20px;
+            border-left: 2px solid #e5e7eb;
+            padding-left: 12px;
+            margin-top: 4px;
+        }
+        
+        .org-expand-icon {
+            font-size: 10px;
+            transition: transform 0.2s;
+            color: #9ca3af;
+            width: 14px;
+        }
+        
+        .org-expand-icon.expanded {
+            transform: rotate(90deg);
+        }
+
+        .animate-fade-in {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    animation: fadeInUp 0.7s cubic-bezier(.4,0,.2,1) forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

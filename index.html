@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upstream Operations Analytics</title>
+    <!-- TailwindCSS CDN -->
+<!-- Tailwind CDN script but local -->
+<script src="js/tailwindcdn.js"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
+
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 min-h-screen">
+    
+    <!-- Notification Container -->
+    <div id="notificationContainer"></div>
+
+    <!-- Sidebar -->
+    <div class="fixed left-0 top-0 h-full w-72 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 shadow-2xl z-50 overflow-y-auto">
+        <div class="h-full flex flex-col">
+            <!-- Header -->
+            <div class="p-6 border-b border-blue-700">
+                <div class="flex items-center gap-3">
+<div class="flex items-center gap-1">
+    <!-- EnerAI Logo (صورة بدل التصميم) -->
+    <img src="C:\Users\SHL\Desktop\EnerAI\Logo\EnerAI2.png" alt="EnerAI Logo" class="w-16 h-16 rounded-[14px] shadow-lg object-cover m-0 p-0 align-middle" />
+    <!-- Text ملاصق للصورة -->
+    <div class="flex flex-col justify-center ml-2">
+        <span class="text-xl font-bold text-white leading-tight m-0 p-0">EnerAI</span>
+        <span class="text-sm text-blue-200 leading-tight m-0 p-0">Automated Energy</span>
+        <span class="text-sm text-blue-200 leading-tight m-0 p-0">Reporting Suite</span>
+    </div>
+</div>
+
+
+
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="p-4 flex-1">
+                <nav class="space-y-2" id="navMenu">
+                    <button onclick="navigateTo('home')" data-page="home" class="nav-item active w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-600/50 text-white">
+                        <i class="fas fa-home text-lg"></i>
+                        <span class="font-semibold">Home</span>
+                    </button>
+                    <button onclick="navigateTo('performance')" data-page="performance" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-blue-100 hover:bg-blue-700/30">
+                        <i class="fas fa-chart-line text-lg"></i>
+                        <span class="font-semibold">Performance</span>
+                    </button>
+                     <button onclick="navigateTo('dataMangmint')" data-page="dataMangmint" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-blue-100 hover:bg-blue-700/30">
+                        <i class="fas fa-sliders-h text-lg"></i>
+                        <span class="font-semibold">Data Management</span>
+                    </button>
+                    <button onclick="navigateTo('reportnow')" data-page="reportnow" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-blue-100 hover:bg-blue-700/30">
+                        <i class="fas fa-bolt text-lg"></i>
+                        <span class="font-semibold">Report Now</span>
+                    </button>
+                    <button onclick="navigateTo('reports')" data-page="reports" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-blue-100 hover:bg-blue-700/30">
+                        <i class="fas fa-folder-open text-lg"></i>
+                        <span class="font-semibold">Reports Archive</span>
+                    </button>
+
+
+
+                </nav>
+            </div>
+            
+ <div id="processingBox" class="hidden mt-6 p-5 bg-slate-50 border border-slate-200 rounded-xl">
+
+    <!-- Main Progress -->
+    <div class="relative w-full bg-slate-200 h-4 rounded-full overflow-hidden">
+        <div id="procBar" class="h-4 bg-blue-600 w-0 transition-all duration-200"></div>
+
+        <!-- Moving pulse line -->
+        <div id="procPulse" class="absolute top-0 left-0 h-4 w-6 bg-blue-300 opacity-70 blur-sm"></div>
+    </div>
+
+    <!-- Text Status -->
+    <p id="procText" class="mt-3 text-slate-700 font-semibold">Starting…</p>
+
+    <!-- ETA + Token Speed -->
+    <div class="mt-2 text-xs text-slate-500">
+        <span id="procEta">ETA: —</span>  
+        &nbsp;•&nbsp;  
+        <span id="procSpeed">Speed: — tok/s</span>
+    </div>
+
+</div>
+
+            <!-- Status -->
+            <div class="p-4 border-t border-blue-700">
+                <div class="bg-blue-800/30 rounded-lg p-3">
+                    <div class="flex items-center gap-2 text-xs text-blue-200 mb-1">
+                        <span class="pulse-dot w-2 h-2 bg-green-400 rounded-full"></span>
+                        <span>System Online</span>
+                    </div>
+                    <div class="text-xs text-blue-300" id="recordCount">Loading...</div>
+                    <div class="text-xs text-blue-400 mt-1" id="chartStatus">Charts: Initializing</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="lg:ml-72">
+
+        <!-- Top Bar -->
+<header class="bg-white/80 backdrop-blur-md shadow-sm border-b border-blue-100 sticky top-0 z-30">
+    <div class="px-6 h-16 flex items-center justify-between">
+
+        <!-- Page Title - Left -->
+        <h2 class="text-xl font-bold gradient-text" id="pageTitle">
+            Home Dashboard
+        </h2>
+
+        <!-- Logo + Time - Right -->
+        <div class="flex flex-col items-end leading-tight">
+            <img src="C:\Users\SHL\Desktop\EnerAI\Logo\EnerAI.png" class="h-12 w-auto object-contain mb-1" alt=" Logo">
+
+            <!-- Time under logo -->
+<span class="text-xs text-slate-400 flex items-center gap-1 !p-0 !m-0 leading-none h-0 overflow-hidden">
+                <span id="currentDate"></span>
+            </span>
+            <span class="text-[12px] text-slate-400" id="currentTimeSmall"></span>
+        </div>
+
+    </div>
+</header>
+
+
+
+        <!-- Content Container -->
+        <main class="p-6" id="mainContent">
+            <div class="flex justify-center py-12">
+                <div class="spinner"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- App Logic -->
+
+    
+<!-- Core JS -->
+<script src="js/config.js"></script>
+<script src="js/init.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/api.js"></script>
+<script src="js/navigation.js"></script>
+
+<!-- Pages -->
+<script src="js/pages/home.js"></script>
+<script src="js/pages/performance.js"></script>
+<script src="js/pages/reportnow.js"></script>
+<script src="js/pages/reports.js"></script>
+<script src="js/pages/settings.js"></script>
+<script src="js/pages/dataMangmint.js"></script>
+
+<!-- في head أو قبل إغلاق body -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css">
+
+<!-- Font Awesome للأيقونات -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- jsPDF & html2canvas for PDF export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Tailwind CSS -->
+</body>
+</html>
