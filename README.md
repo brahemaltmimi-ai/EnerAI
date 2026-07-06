@@ -59,9 +59,9 @@ EnerAI/
      ```
 ## 🎬 Demo Video
 
-<video width="100%" controls>
-  <source src="https://github.com/brahemaltmimi-ai/EnerAI/raw/main/EnerAI.mp4" type="video/mp4">
-</video>
+<a href="https://github.com/brahemaltmimi-ai/EnerAI/EnerAI.mp4">
+  <img src="https://img.shields.io/badge/▶ Watch Demo-EnerAI-blue?style=for-the-badge" />
+</a>
 
 ## Notes
 
