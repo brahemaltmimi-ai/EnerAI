@@ -59,9 +59,7 @@ EnerAI/
      ```
 ## Demo Video
 
-<video width="100%" controls>
-  <source src="https://raw.githubusercontent.com/brahemaltmimi-ai/EnerAI/main/EnerAI.mp4" type="video/mp4">
-</video>
+[![Demo Video](path/to/thumbnail.png)](https://raw.githubusercontent.com/brahemaltmimi-ai/EnerAI/main/EnerAI.mp4)
 
 ## Notes
 
