@@ -1,0 +1,23 @@
+.git
+.gitignore
+README.md
+test.drawio
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+backend/DATASET.ipynb
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs / env
+*.log
+.env

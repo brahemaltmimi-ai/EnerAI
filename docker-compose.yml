@@ -1,0 +1,79 @@
+services:
+  # ------------------------------------------------------------------
+  # Ollama — local LLM runtime used by the AI agent (report generation,
+  # text rewriting). Auto-pulls the configured model on first start.
+  # ------------------------------------------------------------------
+  ollama:
+    image: ollama/ollama:latest
+    container_name: enerai-ollama
+    restart: unless-stopped
+    ports:
+      - "${OLLAMA_PORT:-11434}:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        ollama serve &
+        sleep 5
+        ollama pull ${OLLAMA_MODEL:-llama3.1} || true
+        wait
+    networks:
+      - enerai-net
+    # Uncomment to run Ollama on an NVIDIA GPU (requires the NVIDIA
+    # Container Toolkit on the host):
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  # ------------------------------------------------------------------
+  # Backend — Flask + SQLite API, talks to Ollama for AI features
+  # ------------------------------------------------------------------
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: enerai-backend
+    restart: unless-stopped
+    depends_on:
+      - ollama
+    environment:
+      DB_PATH: /app/data/energyw.db
+      PORT: 8001
+      OLLAMA_HOST: http://ollama:11434
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3.1}
+    volumes:
+      # Bind-mount the SQLite DB so data persists on the host and can be
+      # regenerated/inspected outside the container.
+      - ./backend/energyw.db:/app/data/energyw.db
+    ports:
+      - "${BACKEND_PORT:-8001}:8001"
+    networks:
+      - enerai-net
+
+  # ------------------------------------------------------------------
+  # Frontend — static dashboard served via Nginx
+  # ------------------------------------------------------------------
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+    container_name: enerai-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    networks:
+      - enerai-net
+
+networks:
+  enerai-net:
+    driver: bridge
+
+volumes:
+  ollama_data:
